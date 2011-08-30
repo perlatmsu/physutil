@@ -16,12 +16,12 @@ graph = PhysGraph()
 # Set up cart velocity and verify
 mcart = 0.80
 vcart = vector(0.5,0,0)
-print 'cart velocity =', vcart
+print("cart velocity = ", vcart)
 
 # Set up timing data
 deltat = 0.01
 t = 0
-tf =4
+tf =3.99
 # Set timer in top right of screen
 timerDisplay = PhysTimer(1, 1)
 
@@ -48,5 +48,5 @@ while t < tf:
     graph.plot(t, cart.pos.x)
 
 # Verify final results!
-print "final velocity = ",vcart
-print "final position = ", cart.pos
+print("final velocity = ",vcart)
+print("final position = ", cart.pos)

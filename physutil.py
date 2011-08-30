@@ -8,12 +8,15 @@
 
 # Revisions by date
 
+# v1.12 30 August 2011 -- Daniel Borrero
+# Fixed bug in PhysTimer output
+# E.g., 2.00 s is now displayed as 00:00:02.00 instead of 00:00:01:100
 
 # v1.11 29 August 2011 -- Danny Caballero
 # Changed License to GNU
 
 # v1.1 15 August 2011 -- Daniel Borrero
-# Print statements made compatible with Python 3.X
+# Print statements made compatible with Python 3.1
 
 # v1.01 16 July 2011 -- Danny Caballero
 # Added ability to change PhysAxis color using axisColor
@@ -345,7 +348,10 @@ class PhysTimer:
                 mins = int((t / 60) % 60)
                 secs = int(t % 60)
                 frac = int(round(100 * (t % 1)))
-                self.timerLabel.text = "%02d:%02d:%02d:%02d" % (hours, mins, secs, frac)
+                if frac == 100:
+                    frac = 0
+                    secs = secs + 1;
+                self.timerLabel.text = "%02d:%02d:%02d.%02d" % (hours, mins, secs, frac)
         except TypeError as err:
             print("**********TYPE ERROR**********")
             print("Please check that you are not passing in a variable of the wrong type (e.g. a scalar as a vector, or vice-versa)!")

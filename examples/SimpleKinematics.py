@@ -59,5 +59,5 @@ while ball.pos.y>=0:
     t = t + deltat
     timerDisplay.update(t)
 
-print t
-print ball.pos
+print(t)
+print(ball.pos)

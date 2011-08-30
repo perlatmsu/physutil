@@ -16,7 +16,7 @@ axis = PhysAxis(track,10,axisColor=color.red)
 # Set up cart velocity and verify
 mcart = 0.80
 vcart = vector(3,0,0)
-print 'cart velocity =', vcart
+print ('cart velocity =', vcart)
 
 # Set up timing data
 deltat = 0.01
