@@ -1,6 +1,6 @@
 # physutil.py v1.1
 # Copyright (c) 2011 GT Physics Education Research Group
-# License: MIT (http://www.opensource.org/licenses/mit-license.php)
+# License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
 # This module is built to simplify and assist high school physics students
 # in the construction of models for lab exercises using VPython.
@@ -8,6 +8,9 @@
 
 # Revisions by date
 
+
+# v1.11 29 August 2011 -- Danny Caballero
+# Changed License to GNU
 
 # v1.1 15 August 2011 -- Daniel Borrero
 # Print statements made compatible with Python 3.X
