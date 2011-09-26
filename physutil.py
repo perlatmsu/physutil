@@ -328,7 +328,7 @@ class PhysTimer:
         try:
             self.useScientific = useScientific
             if useScientific is False:
-                self.timerLabel = label(pos=vector(x,y,0), text='00:00:00:00', box=False)
+                self.timerLabel = label(pos=vector(x,y,0), text='00:00:00.00', box=False)
             else:
                 self.timerLabel = label(pos=vector(x,y,0), text='00E01', box=False)
         except TypeError as err:
@@ -559,12 +559,12 @@ class TestPhysTimer(unittest.TestCase):
         self.timer = PhysTimer(1,1)
 
     def test_init(self):
-        self.assertEquals(self.timer.timerLabel.text, "00:00:00:00")
+        self.assertEquals(self.timer.timerLabel.text, "00:00:00.00")
         self.assertEquals(self.timer.timerLabel.pos, vector(1,1,0))
 
     def test_update(self):
         self.timer.update(3923.65)
-        self.assertEquals(self.timer.timerLabel.text, "01:05:23:65")
+        self.assertEquals(self.timer.timerLabel.text, "01:05:23.65")
 
         self.timer.useScientific=True
         self.timer.update(3923.65)
