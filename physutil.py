@@ -1,4 +1,4 @@
-# physutil.py v1.1
+# physutil.py v1.13
 # Copyright (c) 2011 GT Physics Education Research Group
 # License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
@@ -7,6 +7,9 @@
 
 
 # Revisions by date
+
+# v1.13 26 September 2011 -- Daniel Borrero
+# Fixed unit test bug for PhysTimer
 
 # v1.12 30 August 2011 -- Daniel Borrero
 # Fixed bug in PhysTimer output
