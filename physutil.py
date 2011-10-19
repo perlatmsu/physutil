@@ -1,4 +1,4 @@
-# physutil.py v1.13
+# physutil.py v1.2
 # Copyright (c) 2011 GT Physics Education Research Group
 # License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
@@ -7,6 +7,10 @@
 
 
 # Revisions by date
+
+# v1.2 19 October 2011 -- Danny Caballero
+# Added MotionMapN, a class that allows the placing of breadcrumbs or arrows
+# every "n" steps.
 
 # v1.13 26 September 2011 -- Daniel Borrero
 # Fixed unit test bug for PhysTimer
@@ -127,7 +131,7 @@ class MotionMap:
     def __init__(self, obj, tf, numMarkers, markerType="arrow", 
                 markerScale=1, markerColor=color.red, 
                 labelMarkerOrder=True, labelMarkerOffset=vector(0,0,0),
-                dropTime=False, timeOffset=vector(0,0,0)):
+                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0)):
         # MotionMap
         # obj - object to track in mapping / placing markers
         # tf - expected tFinal, used to space marker placement over time
@@ -139,6 +143,7 @@ class MotionMap:
         # labelMarkerOffset - amount to offset numbering by
         # dropTime - boolean determining whether a timestamp should be placed along with the marker
         # timeOffset - if dropTime is True, determines the offset, if any, of the label from the marker
+        # arrowOffset - shift an arrow by an amount (x,y,z), useful for two arrows views
 
         self.obj = obj
         self.tf = tf
@@ -150,6 +155,7 @@ class MotionMap:
         self.labelMarkerOffset = labelMarkerOffset
         self.timeOffset = timeOffset
         self.dropTime = dropTime
+        self.arrowOffset = arrowOffset
 
         # Calculate size of interval for each step, set initial step index
         try:
@@ -172,7 +178,7 @@ class MotionMap:
                 
                 # Display marker!
                 if self.markerType == "arrow":
-                    arrow(pos=self.obj.pos, 
+                    arrow(pos=self.obj.pos+self.arrowOffset, 
                         axis=self.markerScale*quantity, color=self.markerColor)
                 elif self.markerType == "breadcrumbs":
                     points(pos=self.obj.pos, 
@@ -192,7 +198,89 @@ class MotionMap:
             print("******************************")
             print(err)
             raise err
+
+class MotionMapN:
+    """
+    This class assists students in constructing motion maps 
+    using either arrows (measuring a quantity) or "breadcrumbs" 
+    (with timestamps).
+    """
     
+    def __init__(self, obj, dt, numSteps, markerType="arrow", 
+                markerScale=1, markerColor=color.red, 
+                labelMarkerOrder=True, labelMarkerOffset=vector(0,0,0),
+                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0)):
+        # MotionMapN
+        # obj - object to track in mapping / placing markers
+        # dt - time between steps
+        # numSteps - number of steps between markers
+        # markerType - determines type of motionmap; options are "arrow" or "breadcrumbs"
+        # markerScale - replaces pSize / quantscale from motionmodule.py depending on type
+        # markerColor - color of markers
+        # labelMarkerOrder - drop numbers of markers?
+        # labelMarkerOffset - amount to offset numbering by
+        # dropTime - boolean determining whether a timestamp should be placed along with the marker
+        # timeOffset - if dropTime is True, determines the offset, if any, of the label from the markers
+        # arrowOffset - shift an arrow by an amount (x,y,z), useful for two arrows views
+        
+        self.obj = obj
+        self.dt = dt
+        self.numSteps = numSteps
+        self.markerType = markerType
+        self.markerScale = markerScale
+        self.markerColor = markerColor
+        self.labelMarkerOrder = labelMarkerOrder
+        self.labelMarkerOffset = labelMarkerOffset
+        self.timeOffset = timeOffset
+        self.dropTime = dropTime
+        self.arrowOffset = arrowOffset
+        
+        # Calculate size of interval for each step, set initial step index
+        try:
+            self.interval = self.dt * self.numSteps
+        except TypeError as err:
+            print("**********TYPE ERROR**********")
+            print("Please check that you are not passing in a variable of the wrong type (e.g. a scalar as a vector, or vice-versa)!")
+            print("******************************")
+            print(err)
+            raise err
+        self.curMarker = 0
+
+
+    def update(self, t, quantity=1):
+        try:
+
+            threshold = self.interval * self.curMarker
+            # Display new arrow if t has broken new threshold
+            if t >= threshold:
+
+                # Increment marker count
+                self.curMarker += 1
+                
+                # Display marker!
+                if self.markerType == "arrow":
+                    arrow(pos=self.obj.pos+self.arrowOffset, 
+                        axis=self.markerScale*quantity, color=self.markerColor)
+                elif self.markerType == "breadcrumbs":
+                    points(pos=self.obj.pos, 
+                        size=10*self.markerScale*quantity, color=self.markerColor)
+
+                #Also display timestamp if requested
+                if self.dropTime is not False:
+                    epsilon = vector(0,self.markerScale*.5,0)+self.timeOffset
+                    droptimeText = label(pos=self.obj.pos+epsilon, text='t='+str(t)+'s', height=10, box=False)
+
+                # Same with order label
+                if self.labelMarkerOrder is not False:
+                    label(pos=self.obj.pos-vector(0,self.markerScale*.5,0)+self.labelMarkerOffset, text=str(self.curMarker), height=10, box=False)
+                
+        except TypeError as err:
+            print("**********TYPE ERROR**********")
+            print("Please check that you are not passing in a variable of the wrong type (e.g. a scalar as a vector, or vice-versa)!")
+            print("******************************")
+            print(err)
+            raise err
+
 class PhysAxis:
     """
     This class assists students in creating dynamic axes for their models.
@@ -419,6 +507,7 @@ class TestMotionMap(unittest.TestCase):
         self.numMarkers = 5
         self.timeOffset = vector(1,1,1)
         self.markerScale = 2
+        self.arrowOffset = vector(1,1,1)
 
         arrow.reset()
         points.reset()
@@ -426,7 +515,7 @@ class TestMotionMap(unittest.TestCase):
 
         self.map = MotionMap(self.obj, self.tf, self.numMarkers, markerType="arrow", 
                     markerScale=2, markerColor=color.green,
-                    dropTime=True, timeOffset=self.timeOffset)
+                    dropTime=True, timeOffset=self.timeOffset, arrowOffset=self.arrowOffset)
 
     def test_init(self):
         self.assertEqual(self.obj, self.map.obj)
@@ -439,6 +528,8 @@ class TestMotionMap(unittest.TestCase):
         self.assertEqual(True, self.map.dropTime)
         self.assertEqual(self.map.interval, self.tf / self.numMarkers)
         self.assertEqual(self.map.curMarker, 0)
+        self.assertEqual(vector(1,1,1), self.map.arrowOffset)
+        
 
     def test_update(self):
         self.map.curMarker = 1
@@ -453,7 +544,55 @@ class TestMotionMap(unittest.TestCase):
         self.assertEqual(points.called, 0)
         self.assertEqual(label.called, 2)
         self.assertEqual(self.map.curMarker, 2)
-        self.assertEqual(arrow.pos, self.obj.pos)
+        self.assertEqual(arrow.pos, self.obj.pos+self.arrowOffset)
+        self.assertEqual(arrow.axis, 4)
+        self.assertEqual(arrow.color, color.green)
+        self.assertEqual(label.text, "2")
+
+class TestMotionMapN(unittest.TestCase):
+    def setUp(self):
+        self.obj = Mock("obj")
+        self.obj.pos = vector(0,0,0)
+        self.dt = 1
+        self.numSteps = 5
+        self.timeOffset = vector(1,1,1)
+        self.markerScale = 2
+        self.arrowOffset = vector(1,1,1)
+
+        arrow.reset()
+        points.reset()
+        label.reset()
+
+        self.map = MotionMapN(self.obj, self.dt, self.numSteps, markerType="arrow", 
+                    markerScale=2, markerColor=color.green,
+                    dropTime=True, timeOffset=self.timeOffset, arrowOffset=self.arrowOffset)
+
+    def test_init(self):
+        self.assertEqual(self.obj, self.map.obj)
+        self.assertEqual(self.dt, self.map.dt)
+        self.assertEqual(self.numSteps, self.map.numSteps)
+        self.assertEqual("arrow", self.map.markerType)
+        self.assertEqual(self.markerScale, self.map.markerScale)
+        self.assertEqual(color.green, self.map.markerColor)
+        self.assertEqual(vector(1,1,1), self.map.timeOffset)
+        self.assertEqual(True, self.map.dropTime)
+        self.assertEqual(self.map.curMarker, 0)
+        self.assertEqual(vector(1,1,1), self.map.arrowOffset)
+
+    def test_update(self):
+        self.map.curMarker = 1
+
+        self.map.update(0)
+        self.assertEqual(arrow.called, 0)
+        self.assertEqual(points.called, 0)
+        self.assertEqual(label.called, 0)
+
+        self.map.update(3, quantity=2)
+        self.assertEqual(arrow.called, 0)
+        self.assertEqual(points.called, 0)
+        self.assertEqual(label.called, 0)
+        self.assertEqual(self.map.curMarker, 1)
+        self.assertEqual(arrow.pos, self.obj.pos+self.arrowOffset)
         self.assertEqual(arrow.axis, 4)
         self.assertEqual(arrow.color, color.green)
         self.assertEqual(label.text, "2")
