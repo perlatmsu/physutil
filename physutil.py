@@ -1,4 +1,4 @@
-# physutil.py v1.2
+# physutil.py v1.21
 # Copyright (c) 2011 GT Physics Education Research Group
 # License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
@@ -7,6 +7,10 @@
 
 
 # Revisions by date
+
+# v1.21 5 December 2011 -- Danny Caballero
+# Added timerColor attribute to PhysTimer
+# controls color of text
 
 # v1.2 19 October 2011 -- Danny Caballero
 # Added MotionMapN, a class that allows the placing of breadcrumbs or arrows
@@ -415,9 +419,10 @@ class PhysTimer:
     This class assists students in creating an onscreen timer display.
     """
     
-    def __init__(self, x, y, useScientific=False):
+    def __init__(self, x, y, useScientific=False, timerColor=color.white):
         try:
             self.useScientific = useScientific
+            self.timerColor = timerColor
             if useScientific is False:
                 self.timerLabel = label(pos=vector(x,y,0), text='00:00:00.00', box=False)
             else:
