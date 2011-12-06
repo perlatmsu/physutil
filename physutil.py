@@ -420,6 +420,12 @@ class PhysTimer:
     """
     
     def __init__(self, x, y, useScientific=False, timerColor=color.white):
+        
+        # PhysTimer
+        # x,y - world coordinates for the timer location
+        # useScientific - bool to turn off/on scientific notation for time
+        # timerColor - attribute controlling the color of the text
+        
         try:
             self.useScientific = useScientific
             self.timerColor = timerColor
