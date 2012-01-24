@@ -1,5 +1,5 @@
-# physutil.py v1.21
-# Copyright (c) 2011 GT Physics Education Research Group
+# physutil.py v1.22
+# Copyright (c) 2011-2012 GT Physics Education Research Group
 # License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
 # This module is built to simplify and assist high school physics students
@@ -7,6 +7,10 @@
 
 
 # Revisions by date
+
+# v1.22 24 January 2011 -- Danny Caballero
+# Added labelColor attribute to PhysAxis, MotionMap, and MotionMapN
+# controls color of text
 
 # v1.21 5 December 2011 -- Danny Caballero
 # Added timerColor attribute to PhysTimer
@@ -135,7 +139,7 @@ class MotionMap:
     def __init__(self, obj, tf, numMarkers, markerType="arrow", 
                 markerScale=1, markerColor=color.red, 
                 labelMarkerOrder=True, labelMarkerOffset=vector(0,0,0),
-                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0)):
+                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0), labelColor=color.white):
         # MotionMap
         # obj - object to track in mapping / placing markers
         # tf - expected tFinal, used to space marker placement over time
@@ -160,6 +164,7 @@ class MotionMap:
         self.timeOffset = timeOffset
         self.dropTime = dropTime
         self.arrowOffset = arrowOffset
+        self.labelColor = labelColor
 
         # Calculate size of interval for each step, set initial step index
         try:
@@ -191,11 +196,11 @@ class MotionMap:
                 #Also display timestamp if requested
                 if self.dropTime is not False:
                     epsilon = vector(0,self.markerScale*.5,0)+self.timeOffset
-                    droptimeText = label(pos=self.obj.pos+epsilon, text='t='+str(t)+'s', height=10, box=False)
+                    droptimeText = label(pos=self.obj.pos+epsilon, text='t='+str(t)+'s', height=10, box=False, color=self.labelColor)
 
                 # Same with order label
                 if self.labelMarkerOrder is not False:
-                    label(pos=self.obj.pos-vector(0,self.markerScale*.5,0)+self.labelMarkerOffset, text=str(self.curMarker), height=10, box=False)
+                    label(pos=self.obj.pos-vector(0,self.markerScale*.5,0)+self.labelMarkerOffset, text=str(self.curMarker), height=10, box=False, color=self.labelColor)
         except TypeError as err:
             print("**********TYPE ERROR**********")
             print("Please check that you are not passing in a variable of the wrong type (e.g. a scalar as a vector, or vice-versa)!")
@@ -213,7 +218,7 @@ class MotionMapN:
     def __init__(self, obj, dt, numSteps, markerType="arrow", 
                 markerScale=1, markerColor=color.red, 
                 labelMarkerOrder=True, labelMarkerOffset=vector(0,0,0),
-                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0)):
+                dropTime=False, timeOffset=vector(0,0,0), arrowOffset=vector(0,0,0), labelColor=color.white):
         # MotionMapN
         # obj - object to track in mapping / placing markers
         # dt - time between steps
@@ -238,6 +243,7 @@ class MotionMapN:
         self.timeOffset = timeOffset
         self.dropTime = dropTime
         self.arrowOffset = arrowOffset
+        self.labelColor = labelColor
         
         # Calculate size of interval for each step, set initial step index
         try:
@@ -272,11 +278,11 @@ class MotionMapN:
                 #Also display timestamp if requested
                 if self.dropTime is not False:
                     epsilon = vector(0,self.markerScale*.5,0)+self.timeOffset
-                    droptimeText = label(pos=self.obj.pos+epsilon, text='t='+str(t)+'s', height=10, box=False)
+                    droptimeText = label(pos=self.obj.pos+epsilon, text='t='+str(t)+'s', height=10, box=False, color=self.labelColor)
 
                 # Same with order label
                 if self.labelMarkerOrder is not False:
-                    label(pos=self.obj.pos-vector(0,self.markerScale*.5,0)+self.labelMarkerOffset, text=str(self.curMarker), height=10, box=False)
+                    label(pos=self.obj.pos-vector(0,self.markerScale*.5,0)+self.labelMarkerOffset, text=str(self.curMarker), height=10, box=False, color=self.labelColor)
                 
         except TypeError as err:
             print("**********TYPE ERROR**********")
@@ -291,7 +297,7 @@ class PhysAxis:
     """
     
     def __init__(self, obj, numLabels, axisType="x", axis=vector(1,0,0), startPos=None, 
-                length=None, labels = None, labelOrientation="down",axisColor=color.yellow):
+                length=None, labels = None, labelOrientation="down", axisColor=color.yellow, labelColor=color.white):
         # PhysAxis
         # obj - Object which axis is oriented based on by default
         # numLabels - number of labels on axis
@@ -312,7 +318,8 @@ class PhysAxis:
             self.axis = axis if axisType != "y" else vector(0,1,0)
             self.length = length if (length is not None) else obj_size(obj).x
             self.startPos = startPos if (startPos is not None) else vector(-obj_size(obj).x/2,-4*obj_size(obj).y,0)
-            self.axisColor=axisColor
+            self.axisColor = axisColor
+            self.labelColor = labelColor
 
             if labelOrientation == "down":
                 self.labelShift = vector(0,-0.05*self.length,0)
@@ -405,7 +412,7 @@ class PhysAxis:
                 self.intervalMarkers.append(
                     points(pos=intervalPos,color=self.axisColor,size = 6) )
                 self.intervalLabels.append(
-                    label(pos=intervalPos+self.labelShift, text=str(labelText),box=False,height = 8) )
+                    label(pos=intervalPos+self.labelShift, text=str(labelText),box=False,height = 8, color=self.labelColor) )
             i=i+1
 
         # Finally, create / update the line itself!

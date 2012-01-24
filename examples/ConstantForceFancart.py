@@ -40,12 +40,12 @@ timerDisplay = PhysTimer(1, 1)
 # 50 steps. For this class you no longer need to pass a final time but
 # must pass the time step.
 motionMap = MotionMapN(cart, deltat, 20, markerType="breadcrumbs", 
-    labelMarkerOffset=vector(0, .3, 0), dropTime=True)
+    labelMarkerOffset=vector(0, .3, 0), dropTime=True, labelColor=color.blue)
 
 # These statements show off a new attribute of the MotionMapN class (arrowOffset)
-vMap = MotionMapN(cart, deltat, 50)
+vMap = MotionMapN(cart, deltat, 50, labelColor=color.red)
 aMap = MotionMapN(cart, deltat, 50, arrowOffset=(0, 1, 0),
-                  markerColor=color.green)
+                  markerColor=color.green, labelColor=color.green)
 
 # Set fan force
 Ffan = vector(-0.75, 0, 0)
