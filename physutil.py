@@ -317,7 +317,7 @@ class PhysAxis:
             self.axisType = axisType
             self.axis = axis if axisType != "y" else vector(0,1,0)
             self.length = length if (length is not None) else obj_size(obj).x
-            self.startPos = startPos if (startPos is not None) else vector(-obj_size(obj).x/2,-4*obj_size(obj).y,0)
+            self.startPos = startPos if (startPos is not None) else vector(-obj_size(obj).x/2,-4*obj_size(obj).y,0) + self.obj.pos
             self.axisColor = axisColor
             self.labelColor = labelColor
 
@@ -426,10 +426,11 @@ class PhysTimer:
     This class assists students in creating an onscreen timer display.
     """
     
-    def __init__(self, x, y, useScientific=False, timerColor=color.white):
+    def __init__(self, x, y, fontsize = 13, useScientific=False, timerColor=color.white):
         
         # PhysTimer
         # x,y - world coordinates for the timer location
+        # fontsize - size of font for timer text
         # useScientific - bool to turn off/on scientific notation for time
         # timerColor - attribute controlling the color of the text
         
@@ -437,9 +438,9 @@ class PhysTimer:
             self.useScientific = useScientific
             self.timerColor = timerColor
             if useScientific is False:
-                self.timerLabel = label(pos=vector(x,y,0), text='00:00:00.00', box=False)
+                self.timerLabel = label(pos=vector(x,y,0), text='00:00:00.00', box=False, height = fontsize)
             else:
-                self.timerLabel = label(pos=vector(x,y,0), text='00E01', box=False)
+                self.timerLabel = label(pos=vector(x,y,0), text='00E01', box=False, height = fontsize)
         except TypeError as err:
             print("**********TYPE ERROR**********")
             print("Please check that you are not passing in a variable of the wrong type (e.g. a scalar as a vector, or vice-versa)!")
@@ -477,10 +478,16 @@ class PhysGraph:
     graphColors = [color.red, color.green, color.blue, color.yellow, 
                     color.orange, color.cyan, color.magenta, color.white]
 
-    def __init__(self, numPlots=1):
+    def __init__(self, numPlots=1, title = None, xlabel = None, ylabel = None):
+
+        # title - sets window title
+        # xlabel - sets label on the horizontal axis
+        # ylabel - sets label on the vertical axis
+        
         try:
             # Create our specific graph window
-            self.graphDisplay = gdisplay(475,350)
+            self.graphDisplay = gdisplay(475,350, title = title, xtitle = xlabel, ytitle = ylabel)
+
             self.numPlots = numPlots
 
             # Initialize each plot curve
