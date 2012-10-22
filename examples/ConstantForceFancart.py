@@ -11,7 +11,7 @@ cart = box(pos=vector(-track.length/2, 0, 0), size=(0.1, 0.04, 0.06),
            color=color.green)
 
 # Set up graph window
-graph = PhysGraph()
+graph = PhysGraph(backgroundColor=color.black, xlabel = 'position', ylabel = 'time')
 
 # Define axis
 axis = PhysAxis(track, 10, axisColor=color.red)

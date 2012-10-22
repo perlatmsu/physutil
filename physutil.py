@@ -8,6 +8,10 @@
 
 # Revisions by date
 
+# v1.23 22 October 2012 -- John M. Aiken
+# Added backgroundColor attribute to PhysGraph
+# controls background color of graphs
+
 # v1.22 24 January 2011 -- Danny Caballero
 # Added labelColor attribute to PhysAxis, MotionMap, and MotionMapN
 # controls color of text
@@ -478,15 +482,16 @@ class PhysGraph:
     graphColors = [color.red, color.green, color.blue, color.yellow, 
                     color.orange, color.cyan, color.magenta, color.white]
 
-    def __init__(self, numPlots=1, title = None, xlabel = None, ylabel = None):
+    def __init__(self, numPlots=1, title = None, xlabel = None, ylabel = None, backgroundColor = color.black):
 
         # title - sets window title
         # xlabel - sets label on the horizontal axis
         # ylabel - sets label on the vertical axis
+        # backgroundColor - sets background color of graph
         
         try:
             # Create our specific graph window
-            self.graphDisplay = gdisplay(475,350, title = title, xtitle = xlabel, ytitle = ylabel)
+            self.graphDisplay = gdisplay(475,350, title = title, xtitle = xlabel, ytitle = ylabel, background = backgroundColor)
 
             self.numPlots = numPlots
 
