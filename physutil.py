@@ -1,12 +1,22 @@
-# physutil.py v1.22
-# Copyright (c) 2011-2012 GT Physics Education Research Group
+# physutil.py
+# Copyright (c) 2011-2014 Physics Education Research Lab at MSU & GT Physics Education Research Group
 # License: GPL-3.0 (http://opensource.org/licenses/GPL-3.0)
 
-# This module is built to simplify and assist high school physics students
+# This module is built to simplify and assist physics students
 # in the construction of models for lab exercises using VPython.
 
 
 # Revisions by date
+
+# v1.26 19 September 2014 - Danny Caballero
+# Fixed issue with PhysGraph
+# Location of windows in self.graphdisplay required parameters x,y
+
+# v1.25 May 2013 - 
+# Changed default plot style
+
+# v1.24 Apr 2013 --
+# Added read and write csv files
 
 # v1.23 22 October 2012 -- John M. Aiken
 # Added backgroundColor attribute to PhysGraph
@@ -491,7 +501,7 @@ class PhysGraph:
         
         try:
             # Create our specific graph window
-            self.graphDisplay = gdisplay(475,350, title = title, xtitle = xlabel, ytitle = ylabel, background = backgroundColor)
+            self.graphDisplay = gdisplay(x = 475, y = 350, title = title, xtitle = xlabel, ytitle = ylabel, background = backgroundColor)
 
             self.numPlots = numPlots
 
