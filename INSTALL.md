@@ -1,4 +1,4 @@
-# Installing PhysUtil
+## Installing PhysUtil
 PhysUtil is a Python module that helps students generate highly-visual VPython programs. Installation is very simple.
 
 1. Download the physutil.py script
