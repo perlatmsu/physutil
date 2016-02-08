@@ -6,4 +6,4 @@ create highly visual simulations using [VPython](http://www.vpython.org) or [Glo
 
 ### Documentation
 
-Extensive documentation on the use of different classes developed for PhysUtil is [located on the wiki](https://github.com/perlatmsu/python-physutil/wiki).
+Extensive documentation on the use of different classes developed for PhysUtil is [located on the wiki](https://github.com/perlatmsu/physutil/wiki).
