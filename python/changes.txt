@@ -1,0 +1,67 @@
+Revisions by date (physutil.py)
+
+v1.26 23 May 2016 -- Danny Caballero
+Merged two existing versions in github repository 
+no substantive changes from v1.25.2
+
+v1.25.2 17 September 2014 -- Scott Douglas
+Put keywords in PhysGraph gdisplay call for VPython 6.10 compatibility
+
+v1.25.1 13 May 2013 -- Daniel Kovari
+Default PhysGraph style is not a curve with radius 0.015
+
+v1.25 9 May 2013 -- Daniel Kovari
+Moved graphColors declaration into PhysGraph.__init__()
+Not user can specify color list, default list starts with blue
+Added radius parameter to PhysGraph.__init__(), users can now specify
+the radius of the curves being plotted.  The default value is 0 meaning
+a simple pixel curve.
+
+v1.24.2 28 April 2013 -- Daniel Kovari
+Reverted PhysGraph back to v1.23 because plotting functionality seed
+to be broken.
+
+v1.24.1 28 April 2013 -- Daniel Kovari
+Fixed a bug in readcsv()
+
+v1.24 31 March 2013 -- Daniel Kovari
+Added wrappers to load and save csv data
+Merged into version from Mike Schatz (received 28 Mar 2013)
+
+v1.23 22 October 2012 -- John M. Aiken
+Added backgroundColor attribute to PhysGraph
+controls background color of graphs
+
+v1.22 24 January 2011 -- Danny Caballero
+Added labelColor attribute to PhysAxis, MotionMap, and MotionMapN
+controls color of text
+
+v1.21 5 December 2011 -- Danny Caballero
+Added timerColor attribute to PhysTimer
+controls color of text
+
+v1.2 19 October 2011 -- Danny Caballero
+Added MotionMapN, a class that allows the placing of breadcrumbs or arrows
+every "n" steps.
+
+v1.13 26 September 2011 -- Daniel Borrero
+Fixed unit test bug for PhysTimer
+
+v1.12 30 August 2011 -- Daniel Borrero
+Fixed bug in PhysTimer output
+E.g., 2.00 s is now displayed as 00:00:02.00 instead of 00:00:01:100
+
+v1.11 29 August 2011 -- Danny Caballero
+Changed License to GNU
+
+v1.1 15 August 2011 -- Daniel Borrero
+Print statements made compatible with Python 3.1
+
+v1.01 16 July 2011 -- Danny Caballero
+Added ability to change PhysAxis color using axisColor
+
+v1.0 29 April 2011 -- CS Build Team
+Heavy Modification
+
+v0.1 05 January 2011 -- Danny Caballero
+Initial Build
