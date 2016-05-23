@@ -1,4 +1,4 @@
-# physutil.py
+# physutil.py (v1.26)
 # An open-source module for highly visual animations
 
 from __future__ import division
@@ -475,6 +475,110 @@ class PhysGraph:
             print("******************************")
             print(err)
             raise err
+
+#########################################################################################
+##  CSV Functions readcsv(), writecsv()
+def readcsv(filename,cols=1, IgnoreHeader=False, startrow = 0, NumericData=True):
+    data = [0]*(cols);
+    for i in range(cols):
+        data[i]=[];
+    if sys.version_info.major == 2:
+        with open(filename,'rb') as csvfile:  #open the file, and iterate over its data
+            csvdata = csv.reader(csvfile);   #tell python that the file is a csv
+            for i in range(0,startrow): #skip to the startrow
+                csvdata.next();
+            if IgnoreHeader and startrow!=0:
+                csvdata.next(); #if ignoring header, advance one row
+            for row in csvdata:     #iterate over the rows in the csv
+                #Assign the cols of each row to a variable
+                for c in range(cols):   #read in the text values as floats in the array
+                    if NumericData:
+                        data[c].append(float(row[c]));
+                    else:
+                        data[c].append(row[c]);
+    elif sys.version_info.major == 3:
+        with open(filename,newline='') as csvfile:  #open the file, and iterate over its data
+            csvdata = csv.reader(csvfile);   #tell python that the file is a csv
+            for i in range(0,startrow): #skip to the startrow
+                csvdata.next();
+            if ignoreHeader and startrow!=0:
+                csvdata.next(); #if ignoring header, advance one row
+            for row in csvdata:     #iterate over the rows in the csv
+                #Assign the cols of each row to a variable
+                for c in range(cols):   #read in the text values as floats in the array
+                    if NumericData:
+                        data[c].append(float(row[c]));
+                    else:
+                        data[c].append(row[c]);
+    else:
+        sys.stderr.write('You need to use python 2* or 3* \n');
+        exit(1);
+    return data;
+
+def writecsv(filename,datalist, header=[]):
+    csvfile = [];
+    useheader = False;
+    #make sure we have the correct versions of python
+    if sys.version_info.major == 2:
+        csvfile = open(filename,'wb');
+    elif sys.version_info.major == 3:
+        csvfile = open('pythonTest.csv', 'w',newline='');
+    else:
+        sys.stderr.write('You need to use python 2* or 3* \n');
+        exit(1);
+
+    #if user passed a numpy array, convert it
+    if isinstance(datalist,numpy_ndarray):
+        datalist = datalist.T;
+        datalist = datalist.tolist();
+    #if there is no data, close the file
+    if len(datalist)<1:
+        csvfile.close();
+        return;
+    #check to see if datalist is a single list or list of lists
+    isLofL = False;
+    ListLength = 0;
+    numLists = 0;
+    if isinstance(datalist[0],(list,tuple)):    #check the first element in datalist
+        isLofL = True;
+        ListLength = len(datalist[0]);
+        numLists = len(datalist);
+    else:
+        isLofL = False;
+        ListLength = len(datalist);
+        numLists = 1;
+    #if a list then make sure everything is the same length
+    if isLofL:
+        for Lidx in range(1,len(datalist)):
+            if len(datalist[Lidx])!=ListLength:
+                sys.stderr.write('All lists in datalist must be the same length \n');
+                csvfile.close();
+                return;
+    #if header is present, make sure it is the same length as the number of cols
+    if len(header)!=0:
+        if len(header)!=numLists:
+            sys.stderr.write('Header length did not match the number of columns, ignoring header.\n');
+        else:
+            useheader = True;
+
+    #now that we've checked the inputs, loop and write outputs
+    DataWriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL) # Create writer object
+    if useheader:
+        DataWriter.writerow(header);
+    for row in range(0,ListLength):
+        thisrow = [];
+        if numLists > 1:
+            for col in range(0,numLists):
+                thisrow.append(datalist[col][row]);
+        else:
+            thisrow.append(datalist[row]);
+
+        DataWriter.writerow(thisrow);
+
+    #close the csv file to save
+    csvfile.close();
+## END CSV Functions
+#########################################################################################
 
 """
 #
