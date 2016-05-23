@@ -1,5 +1,8 @@
 Revisions by date (physutil.py)
 
+v1.27 23 May 2016 -- Danny Caballero
+Fixed unit testing inputs for PhysGraph
+
 v1.26 23 May 2016 -- Danny Caballero
 Merged two existing versions in github repository 
 no substantive changes from v1.25.2

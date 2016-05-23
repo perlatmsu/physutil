@@ -1,4 +1,4 @@
-# physutil.py (v1.26)
+# physutil.py (v1.27)
 # An open-source module for highly visual animations
 
 from __future__ import division
@@ -440,7 +440,7 @@ class PhysGraph:
     graphColors = [color.red, color.green, color.blue, color.yellow, 
                     color.orange, color.cyan, color.magenta, color.white]
 
-    def __init__(self, numPlots=1, title = None, xlabel = None, ylabel = None, backgroundColor = color.black):
+    def __init__(self, numPlots=1, title = None, xlabel = None, ylabel = None, backgroundColor = color.white):
 
         # title - sets window title
         # xlabel - sets label on the horizontal axis
@@ -777,7 +777,8 @@ class TestPhysGraph(unittest.TestCase):
         self.physGraph = PhysGraph(numPlots = 5)
 
     def test_init(self):
-        self.assertEqual(self.physGraph.graphDisplay.args, (475, 350))
+        self.assertEqual(self.physGraph.graphDisplay.x, 475)
+        self.assertEqual(self.physGraph.graphDisplay.y, 350)
         self.assertEqual(self.physGraph.numPlots, 5)
         self.assertEqual(len(self.physGraph.graphs), 5)
 
