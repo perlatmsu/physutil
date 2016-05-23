@@ -3,6 +3,9 @@
 
 from __future__ import division
 import unittest
+import csv;
+import sys;
+from numpy import ndarray as numpy_ndarray;
 
 """
 #
