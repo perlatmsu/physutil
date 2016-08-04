@@ -14,5 +14,5 @@ Using PhysUtil as a Javasript library can help uses generate highly-visual Glows
 
 1. In your Glowscript program include the following line:
 ```
-get_library('https://raw.githubusercontent.com/perlatmsu/physutil/master/js/physutil.js')
+get_library('http://dannycab.github.io/docs/glowscript/physutil.js')
 ```
