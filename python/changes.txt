@@ -1,5 +1,8 @@
 Revisions by date (physutil.py)
 
+v1.28 7 Sept 2016 -- Danny Caballero
+Fixed initialization of 'quantity' in MotionMap to be vector instead of scalar
+
 v1.27 23 May 2016 -- Danny Caballero
 Fixed unit testing inputs for PhysGraph
 

@@ -140,7 +140,7 @@ class MotionMap:
         self.curMarker = 0
 
 
-    def update(self, t, quantity=1):
+    def update(self, t, quantity=vector(0,0,0)):
         try:
             # Display new arrow if t has broken next threshold
             if t > (self.interval * self.curMarker):
@@ -219,7 +219,7 @@ class MotionMapN:
         self.curMarker = 0
 
 
-    def update(self, t, quantity=1):
+    def update(self, t, quantity=vector(0,0,0)):
         try:
 
             threshold = self.interval * self.curMarker
