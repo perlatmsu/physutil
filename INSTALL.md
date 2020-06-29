@@ -12,7 +12,12 @@ It's that simple.
 ### Glowscript
 Using PhysUtil as a Javasript library can help uses generate highly-visual Glowscript programs. Use is very simple.
 
-1. In your Glowscript program include the following line:
+1. In your Glowscript (2.9 or below) program include the following line:
 ```
 get_library('https://rawgit.com/perlatmsu/physutil/master/js/physutil.js')
+```
+
+1. In your Glowscript 3.0 program include the following line:
+```
+get_library('https://rawgit.com/perlatmsu/physutil/master/js/physutil-3.0.js')
 ```
