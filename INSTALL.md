@@ -10,7 +10,7 @@ Using PhysUtil as a Python module can helps users generate highly-visual VPython
 It's that simple.
 
 ### Glowscript
-Using PhysUtil as a Javasript library can help uses generate highly-visual Glowscript programs. Use is very simple.
+Using PhysUtil as a Javasript library can help uses generate highly-visual Glowscript programs. Use is simple.
 
 1. In your Glowscript (2.9 or below) program include the following line:
 ```
@@ -21,3 +21,5 @@ get_library('https://cdn.jsdelivr.net/gh/perlatmsu/physutil@master/js/physutil.j
 ```
 get_library('https://cdn.jsdelivr.net/gh/perlatmsu/physutil@master/js/physutil-3.0.js')
 ```
+
+The difference between these two libraries is based on how Glowscript changed handling the properties of the arrow object.
